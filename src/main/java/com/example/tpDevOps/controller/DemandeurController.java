@@ -15,40 +15,40 @@ import java.util.List;
 
 @Controller
 @AllArgsConstructor
-public class ProfesseurController {
+public class DemandeurController {
 
     private DemandeurRepo demandeurRepo;
     private DemandeurService demandeurService;
 
 
-    @GetMapping("/listProf")
-    public String showPageListProf(Model model) {
-        model.addAttribute("ListProf");
-        return "professeur/listProf";
+    @GetMapping("/listCv")
+    public String showPageListDemande(Model model) {
+        model.addAttribute("ListCv");
+        return "demandeur/listCv";
         }
+    @GetMapping("/admin/demandeur/listCv")
+    public String showlistCv(Model model){
+        List<Demandeur> ListDemande = demandeurRepo.findAll();
+        model.addAttribute("ListDemande",ListDemande);
+        return "demandeur/listCv";
+    }
 
-    @PostMapping(path = "/addprof")
+    @PostMapping(path = "/addCv")
     public String add(Model model, @Valid Demandeur demandeur, BindingResult bindingResult){
-        if(bindingResult.hasErrors()) return "professeur/formProf";
-        demandeurService.addProfesseur(demandeur);
-        return "redirect:/professeur/listProf";
+        if(bindingResult.hasErrors()) return "demandeur/formCv";
+        demandeurService.addDemandeur(demandeur);
+        return "redirect:/demandeur/listCv";
     }
-    @GetMapping("/professeur/listProf")
-    public String showlistProf(Model model){
-        List<Demandeur> ListProf = demandeurRepo.findAll();
-        model.addAttribute("ListProf",ListProf);
-        return "professeur/listProf";
+    @GetMapping("/user/formCv")
+    public String formDemande(Model model){
+        model.addAttribute("demandeur", new Demandeur());
+        return "demandeur/formCv";
     }
-     @GetMapping("/login")
-    public String formProf(Model model){
-        model.addAttribute("professeur", new Demandeur());
-        return "professeur/formProf";
-    }
-    @GetMapping("/editProf")
-    public String editProf(Model model,Integer id){
+    @GetMapping("/editDemande")
+    public String editDemande(Model model,Integer id){
         Demandeur demandeur = demandeurRepo.findById(id).orElse(null);
-        if (demandeur ==null) throw  new RuntimeException("Professeur introuvable");
-        model.addAttribute("professeur", demandeur);
-        return "professeur/editProf";
+        if (demandeur ==null) throw  new RuntimeException("demandeur introuvable");
+        model.addAttribute("demandeur", demandeur);
+        return "demandeur/editCv";
     }
 }

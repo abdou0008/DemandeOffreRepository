@@ -12,57 +12,16 @@
 <body>
 <div layout:fragment="content1">
   <div class="col-md-6 offset-3">
-    <form th:action="@{/addCv}" method="post">
+    <form th:action="@{/addCategorie}" method="post">
       <div>
         <label> ID:</label>
-        <label th:text="${demandeur.id}"></label>
-        <input class="form-control" type="hidden" name="id" th:value="${demandeur.id}">
-
+        <label th:text="${categorie.idCategorie}"></label>
+        <input class="form-control" type="hidden" name="idCategorie" th:value="${categorie.idCategorie}">
       </div>
       <div>
-        <label for="nom">Nom</label>
-        <input id="nom" class="form-control" type="text" name="nom" th:value="${demandeur.nom}">
-        <span class="text-danger" th:errors="${demandeur.nom}"></span>
-      </div>
-      <div>
-        <label for="prenom">Prenom</label>
-        <input id="prenom" class="form-control" type="text" name="prenom" th:value="${demandeur.prenom}">
-        <span class="text-danger" th:errors="${demandeur.prenom}"></span>
-      </div>
-      <div>
-        <label for="email">Email</label>
-        <input id="email" class="form-control" type="text" name="email" th:value="${demandeur.email}">
-        <span class="text-danger" th:errors="${demandeur.email}"></span>
-      </div>
-      <div>
-        <label for="adresse">adresse</label>
-        <input id="adresse" class="form-control" type="text" name="adresse" th:value="${demandeur.adresse}">
-        <span class="text-danger" th:errors="${demandeur.adresse}"></span>
-      </div>
-      <div>
-        <label for="age">age</label>
-        <input id="age" class="form-control" type="number" name="age" th:value="${demandeur.age}">
-        <span class="text-danger" th:errors="${demandeur.age}"></span>
-      </div>
-      <div>
-        <label for="telephone">telephone</label>
-        <input id="telephone" class="form-control" type="text" name="telephone" th:value="${demandeur.telephone}">
-        <span class="text-danger" th:errors="${demandeur.telephone}"></span>
-      </div>
-      <div>
-        <label for="specialite">specialite</label>
-        <input id="specialite" class="form-control" type="text" name="specialite" th:value="${demandeur.specialite}">
-        <span class="text-danger" th:errors="${demandeur.specialite}"></span>
-      </div>
-      <div>
-        <label for="niveauEtude">niveauEtude</label>
-        <input id="niveauEtude" class="form-control" type="text" name="niveauEtude" th:value="${demandeur.niveauEtude}">
-        <span class="text-danger" th:errors="${demandeur.niveauEtude}"></span>
-      </div>
-      <div>
-        <label for="experienceProfessionnelle">experienceProfessionnelle</label>
-        <input id="experienceProfessionnelle" class="form-control" type="text" name="experienceProfessionnelle" th:value="${demandeur.experienceProfessionnelle}">
-        <span class="text-danger" th:errors="${demandeur.experienceProfessionnelle}"></span>
+        <label for="libelle">libelle</label>
+        <input id="libelle" class="form-control" type="text" name="libelle" th:value="${categorie.libelle}">
+        <span class="text-danger" th:errors="${categorie.libelle}"></span>
       </div>
       <button type="submit" class="btn btn-primary">save</button>
 

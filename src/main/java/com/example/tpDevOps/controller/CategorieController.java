@@ -1,7 +1,11 @@
 package com.example.tpDevOps.controller;
 
+import com.example.tpDevOps.entities.Categorie;
+import com.example.tpDevOps.entities.Demandeur;
 import com.example.tpDevOps.entities.Offre;
+import com.example.tpDevOps.repository.CategorieRepo;
 import com.example.tpDevOps.repository.OffreRepo;
+import com.example.tpDevOps.service.CategorieService;
 import com.example.tpDevOps.service.OffreService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -15,35 +19,39 @@ import java.util.List;
 
 @Controller
 @AllArgsConstructor
-public class OffreController {
+public class CategorieController {
 
-    private OffreRepo offreRepo;
-    private OffreService offreService;
+    private CategorieRepo categorieRepo;
+    private CategorieService categorieService;
 
 
-    @GetMapping("/listoffre")
-    public String showPageListOffre(Model model) {
-        model.addAttribute("ListOffre");
-        return "offre/listOffre";
+    @GetMapping("/listcategorie")
+    public String showPageListCategorie(Model model) {
+        model.addAttribute("ListCategorie");
+        return "categorie/listCategorie";
         }
-
-    @PostMapping(path = "/addoffre")
-    public String add(Model model, @Valid Offre offre, BindingResult bindingResult){
-        if(bindingResult.hasErrors()) return "offre/formoffre";
-        offreService.addOffre(offre);
-        return "redirect:/offre/listoffre";
+    @GetMapping("/admin/formcategorie")
+    public String formDemande(Model model){
+        model.addAttribute("categorie", new Categorie());
+        return "categorie/formCategorie";
     }
-    @GetMapping("/offre/listoffre")
-    public String showlistoffre(Model model){
-        List<Offre> ListOffre = offreRepo.findAll();
-        model.addAttribute("ListOffre",ListOffre);
-        return "offre/listOffre";
+    @PostMapping(path = "/addcategorie")
+    public String add(Model model, @Valid Categorie categorie, BindingResult bindingResult){
+        if(bindingResult.hasErrors()) return "categorie/formcategorie";
+        categorieService.addCategorie(categorie);
+        return "redirect:/admin/categorie/listcategorie";
     }
-    @GetMapping("/editoffre")
-    public String editOffre(Model model,Integer id){
-        Offre offre = offreRepo.findById(id).orElse(null);
-        if (offre ==null) throw  new RuntimeException("offre introuvable");
-        model.addAttribute("offre", offre);
-        return "offre/editoffre";
+    @GetMapping("/admin/categorie/listcategorie")
+    public String showlistcategorie(Model model){
+        List<Categorie> ListCategorie = categorieRepo.findAll();
+        model.addAttribute("ListCategorie",ListCategorie);
+        return "categorie/listCategorie";
+    }
+    @GetMapping("/editcategorie")
+    public String editCategorie(Model model,Integer id){
+        Categorie categorie= categorieRepo.findById(id).orElse(null);
+        if (categorie ==null) throw  new RuntimeException("offre introuvable");
+        model.addAttribute("categorie", categorie);
+        return "categorie/editCategorie";
     }
 }

@@ -12,21 +12,21 @@
 <div layout:fragment="content1">
 <div class="container mt-2" >
   <div class="card">
-    <div class="card-header"> Liste des offres</div>
+    <div class="card-header"> Liste des categorie</div>
     <div class="card-body"></div>
-    <form method="get" th:action="@{/demandeur/listCv}">
+    <form method="get" th:action="@{/categorie/listcategorie}">
     </form>
     <table class="table">
       <thead>
       <tr>
-        <th>description</th>
+        <th>libelle</th>
       </tr>
       </thead>
       <tbody>
-      <tr th:each="c:${ListOffre}">
-        <td th:text="${c.description}"></td>
+      <tr th:each="c:${ListCategorie}">
+        <td th:text="${c.libelle}"></td>
         <td>
-          <a class="btn btn-success" th:href="@{/editOffre(id=${c.idOffre})}">
+          <a class="btn btn-success" th:href="@{/editcategorie(id=${c.idCategorie})}">
             Edit</a>
         </td>
       </tr>

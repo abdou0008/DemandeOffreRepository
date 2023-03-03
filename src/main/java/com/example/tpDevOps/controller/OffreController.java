@@ -1,54 +1,64 @@
 package com.example.tpDevOps.controller;
 
-import com.example.tpDevOps.entities.Demandeur;
-import com.example.tpDevOps.repository.DemandeurRepo;
-import com.example.tpDevOps.service.DemandeurService;
+import com.example.tpDevOps.entities.Categorie;
+import com.example.tpDevOps.entities.Offre;
+import com.example.tpDevOps.repository.CategorieRepo;
+import com.example.tpDevOps.repository.OffreRepo;
+import com.example.tpDevOps.service.OffreService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.validation.Valid;
 import java.util.List;
 
 @Controller
 @AllArgsConstructor
-public class DemandeurController {
+public class OffreController {
 
-    private DemandeurRepo demandeurRepo;
-    private DemandeurService demandeurService;
+    private OffreRepo offreRepo;
+    private CategorieRepo categorieRepo;
+    private OffreService offreService;
 
 
-    @GetMapping("/listCv")
-    public String showPageListProf(Model model) {
-        model.addAttribute("ListCv");
-        return "demandeur/listCv";
+
+    @GetMapping("/listoffre")
+    public String showPageListOffre(Model model) {
+        model.addAttribute("ListOffre");
+        return "offre/listOffre";
         }
-
-    @PostMapping(path = "/addCv")
-    public String add(Model model, @Valid Demandeur demandeur, BindingResult bindingResult){
-        if(bindingResult.hasErrors()) return "demandeur/formCv";
-        demandeurService.addDemandeur(demandeur);
-        return "redirect:/demandeur/listCv";
+    @GetMapping("/user/offre/listOffre")
+    public String showlistoffre(Model model){
+        List<Offre> ListOffre = offreRepo.findAll();
+        model.addAttribute("ListOffre",ListOffre);
+        return "offre/listOffre";
     }
-    @GetMapping("/demandeur/listCv")
-    public String showlistCv(Model model){
-        List<Demandeur> ListDemande = demandeurRepo.findAll();
-        model.addAttribute("ListDemande",ListDemande);
-        return "demandeur/listCv";
-    }
-     @GetMapping("/login")
+    @GetMapping("/admin/formoffre")
     public String formDemande(Model model){
-        model.addAttribute("demandeur", new Demandeur());
-        return "demandeur/formCv";
+        model.addAttribute("offre", new Offre());
+        List<Categorie> categories = categorieRepo.findAll();
+        model.addAttribute("categories", categories);
+        return "offre/formOffre";
     }
-    @GetMapping("/editDemande")
-    public String editDemande(Model model,Integer id){
-        Demandeur demandeur = demandeurRepo.findById(id).orElse(null);
-        if (demandeur ==null) throw  new RuntimeException("demandeur introuvable");
-        model.addAttribute("demandeur", demandeur);
-        return "demandeur/editCv";
+    @PostMapping(path = "/addoffre")
+    public String add(Model model, @Valid Offre offre,@RequestParam Integer idCategorie, BindingResult bindingResult){
+        if(bindingResult.hasErrors()) return "offre/formOffre";
+        model.addAttribute("categories", categorieRepo.findAll());
+        Categorie categorie = categorieRepo.findById(idCategorie).get();
+        offre.setCatOffre(categorie);
+        //offreRepo.save(offre);
+        offreService.addOffre(offre);
+        return "redirect:/user/offre/listOffre";
+    }
+    @GetMapping("/editoffre")
+    public String editOffre(Model model,Integer id){
+        Offre offre = offreRepo.findById(id).orElse(null);
+        if (offre ==null) throw  new RuntimeException("offre introuvable");
+        model.addAttribute("offre", offre);
+        return "offre/editOffre";
     }
 }
