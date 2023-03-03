@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="template1"
+>
+<head>
+  <meta charset="UTF-8">
+  <title>Page Edit</title>
+  <link rel="stylesheet" href="/webjars/bootstrap/5.1.3/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" th:href="@{/css/app.css}">
+</head>
+<body>
+<div layout:fragment="content1">
+  <div class="col-md-6 offset-3">
+    <form th:action="@{/addprof}" method="post">
+      <div>
+        <label> ID:</label>
+        <label th:text="${demandeur.id}"></label>
+        <input class="form-control" type="hidden" name="id" th:value="${demandeur.id}">
+
+      </div>
+      <div>
+        <label for="nom">Nom</label>
+        <input id="nom" class="form-control" type="text" name="nom" th:value="${demandeur.nom}">
+        <span class="text-danger" th:errors="${demandeur.nom}"></span>
+      </div>
+      <div>
+        <label for="prenom">Prenom</label>
+        <input id="prenom" class="form-control" type="text" name="prenom" th:value="${demandeur.prenom}">
+        <span class="text-danger" th:errors="${demandeur.prenom}"></span>
+      </div>
+      <div>
+        <label for="email">Email</label>
+        <input id="email" class="form-control" type="text" name="email" th:value="${demandeur.email}">
+        <span class="text-danger" th:errors="${demandeur.email}"></span>
+      </div>
+      <div>
+        <label for="password">Password</label>
+        <input id="password" class="form-control" type="password" name="password" th:value="${demandeur.password}">
+        <span class="text-danger" th:errors="${demandeur.password}"></span>
+      </div>
+      <div>
+        <label for="etat">Etat</label>
+        <input id="etat" class="form-control" type="number" name="etat" th:value="${demandeur.etat}">
+        <span class="text-danger" th:errors="${demandeur.etat}"></span>
+      </div>
+      <button type="submit" class="btn btn-primary">save</button>
+
+    </form>
+  </div>
+</div>
+</body>
+</html>
